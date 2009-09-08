@@ -7,8 +7,8 @@ license-file: LICENSE
 category: Language
 
 synopsis: A package to construct boolean logic functions out of digital gates.
-description: A package to construgt boolean logic functions and compile them 
-to various forms.
+          description: A package to construgt boolean logic functions and compile them 
+          to various forms.
 
 build-type: Simple
 cabal-version: >= 1.2.0
