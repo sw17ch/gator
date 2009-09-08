@@ -15,6 +15,35 @@ import Control.Monad.State
 
 compile g = execState g initL
 
+newInput n = do
+    s <- get
+
+    let sets = gateSets s
+        ins  = inputs sets
+        newi = S.insert g ins
+        news = sets { inputs = newi }
+
+    put $ s { gateSets = news }
+
+    return g
+
+    where g = Input n
+
+
+newOutput n = do
+    s <- get
+
+    let sets = gateSets s
+        outs = outputs sets
+        newo = S.insert g outs
+        news = sets { outputs = newo }
+
+    put $ s { gateSets = news }
+
+    return g
+
+    where g = Output n
+
 newOr n = do
     s <- get
 
