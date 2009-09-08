@@ -8,26 +8,26 @@ import Logic
 
 import Ops
 
-
 main :: IO ()
 main = do
     print $ compile gates
 
 gates = do
+    in0  <- newInput "in0"
+    in1  <- newInput "in1"
+    out0 <- newOutput "out0"
+
     o <- doOr in0 in1 "or0"
     lineTo o out0 "ln0"
-    where
-        in0  = Input "in0"
-        in1  = Input "in1"
-        out0 = Output "out0"
 
     {- Produces:
-     -  Logic {gateSets = GateSets {
+     -  Logic {
+     -      gateSets = GateSets {
      -          orGates = fromList [OrGate "or0"],
      -          andGates = fromList [],
      -          traces = fromList [Line "ln0"],
-     -          inputs = fromList [],
-     -          outputs = fromList []
+     -          inputs = fromList [Input "in0",Input "in1"],
+     -          outputs = fromList [Output "out0"]
      -      },
      -      joints = fromList [
      -          ("in0.out","or0.in0"),
