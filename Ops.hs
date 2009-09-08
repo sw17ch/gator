@@ -13,7 +13,7 @@ import qualified Data.Set as S
 
 import Control.Monad.State
 
-compile g = snd (runState g initL)
+compile g = execState g initL
 
 newOr n = do
     s <- get
@@ -30,8 +30,8 @@ newOr n = do
     where g = OrGate n
 
 doOr a b n = do
-    s <- get
     g <- newOr n
+    s <- get
 
     let js   = joints s
         new1 = M.insert (out a) (in0 g) js
@@ -56,8 +56,8 @@ newLine n = do
     where l = Line n
 
 lineTo a b n = do
-    s <- get
     l <- newLine n
+    s <- get
 
     let js    = joints s
         new   = M.insert (out a) (in0 b) js
