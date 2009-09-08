@@ -4,7 +4,7 @@ import General
 import IO
 
 data Output = Output Name
-    deriving (Show,Eq)
+    deriving (Show,Eq,Ord)
 
 instance Named Output where
     name (Output n) = n
