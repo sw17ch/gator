@@ -1,4 +1,4 @@
-module IO where
+module Language.Gator.IO where
 
 class Named a where
     name :: a -> String

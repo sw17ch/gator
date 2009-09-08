@@ -1,7 +1,7 @@
-module Input where
+module Language.Gator.Gates.Input where
 
-import General
-import IO
+import Language.Gator.General
+import Language.Gator.IO
 
 data Input = Input Name
     deriving (Show, Eq, Ord)

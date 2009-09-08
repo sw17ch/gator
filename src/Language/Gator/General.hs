@@ -1,4 +1,4 @@
-module General where
+module Language.Gator.General where
 
 type Name = String
 
