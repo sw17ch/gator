@@ -12,7 +12,6 @@ module Language.Gator.Ops (
 import Language.Gator.General
 import Language.Gator.Logic
 import Language.Gator.IO
-
 import Language.Gator.Gates.Input
 import Language.Gator.Gates.Output
 import Language.Gator.Gates.Trace
@@ -20,10 +19,8 @@ import Language.Gator.Gates.AndGate
 import Language.Gator.Gates.OrGate
 
 import Data.Lenses
-
 import qualified Data.Map as M
 import qualified Data.Set as S
-
 import Control.Monad.State
 import Control.Monad.Error
 
