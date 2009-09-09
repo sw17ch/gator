@@ -1,6 +1,8 @@
 module Main where
 
-import Language.Gator.Examples
+import Language.Gator.Examples.IO
+import Language.Gator.Examples.Err
+
 
 main :: IO ()
 main = do
