@@ -10,9 +10,12 @@ import qualified Data.Map as M
 import qualified Data.Set as S
 
 import Control.Monad.State
+import Control.Monad.Error
 
-compile :: State Logic a -> Logic
-compile g = execState g initL
+--compile :: State Logic a -> Logic
+-- evalStateT :: Monad m => StateT s m a -> s -> m a
+compile :: StateT Logic (Either String) a -> Either String Logic
+compile g = execStateT g initL
 
 newInput :: (MonadState Logic m) => Name -> m Input
 newInput n = do

@@ -1,13 +1,16 @@
-{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE FlexibleContexts #-}
 module Language.Gator.Example where
 
 import Language.Gator.Ops
+import Language.Gator.Logic
+
+import Control.Monad.State
 
 main :: IO ()
 main = do
     print $ compile gates
 
-gates :: m ()
+gates :: (MonadState Logic m) => m ()
 gates = do
     in0  <- newInput "in0"
     in1  <- newInput "in1"
