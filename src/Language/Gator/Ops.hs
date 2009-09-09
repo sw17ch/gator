@@ -1,10 +1,25 @@
 {-# LANGUAGE FlexibleContexts #-}
-module Language.Gator.Ops where
+module Language.Gator.Ops (
+    compile,
+    newInput,
+    newOutput,
+    newOr,
+    doOr,
+    newLine,
+    lineTo,
+) where
 
 import Language.Gator.General
 import Language.Gator.Logic
-import Language.Gator.Gates
 import Language.Gator.IO
+
+import Language.Gator.Gates.Input
+import Language.Gator.Gates.Output
+import Language.Gator.Gates.Line
+import Language.Gator.Gates.AndGate
+import Language.Gator.Gates.OrGate
+
+import Data.Lenses
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -12,9 +27,6 @@ import qualified Data.Set as S
 import Control.Monad.State
 import Control.Monad.Error
 
---compile :: State Logic a -> Logic
--- evalStateT :: Monad m => StateT s m a -> s -> m a
--- compile :: StateT Logic (Either String) a -> Either String Logic
 compile :: (Monad m) => StateT Logic m a -> m Logic
 compile g = execStateT g initL
 
@@ -22,84 +34,84 @@ newInput :: (MonadState Logic m) => Name -> m Input
 newInput n = do
     s <- get
 
-    let sets = gateSets s
-        ins  = inputs sets
-        newi = S.insert g ins
-        news = sets { inputs = newi }
+    let ins = s `fetch` l
+        s'  = s `update` l $ S.insert g ins
 
-    put $ s { gateSets = news }
+    put s'
 
     return g
 
     where g = Input n
+          l = gateSets . inputs
 
 
 newOutput :: (MonadState Logic m) => Name -> m Output
 newOutput n = do
     s <- get
 
-    let sets = gateSets s
-        outs = outputs sets
-        newo = S.insert g outs
-        news = sets { outputs = newo }
+    let outs  = s `fetch` l
+        s'    = s `update` l $ S.insert g outs
 
-    put $ s { gateSets = news }
+    put s'
 
     return g
 
     where g = Output n
+          l = gateSets . outputs
 
 newOr :: (MonadState Logic m) => Name -> m OrGate
 newOr n = do
     s <- get
 
-    let sets  = gateSets s
-        ors   = orGates sets
-        newo  = S.insert g ors
-        news  = sets { orGates = newo }
+    let ors  = s `fetch` l
+        s'   = s `update` l $ S.insert g ors
 
-    put $ s { gateSets = news }
+    put s'
 
     return g
 
     where g = OrGate n
+          l = gateSets . orGates
 
 doOr :: (Out a, Out b, MonadState Logic m) => a -> b -> Name -> m OrGate
 doOr a b n = do
     g <- newOr n
     s <- get
 
-    let js   = joints s
-        new1 = M.insert (out a) (in0 g) js
-        new2 = M.insert (out b) (in1 g) new1
+    let js  = s `fetch` l
+        js' = M.insert (out b) (in1 g) $ M.insert (out a) (in0 g) js
+        s'  = s `update` l $ js'
     
-    put $ s { joints = new2 }
+    put s'
 
     return g
+    where l = joints
 
 newLine :: (MonadState Logic m) => Name -> m Line
 newLine n = do
     s <- get
 
-    let sets = gateSets s
-        lns  = traces sets
-        newl = S.insert l lns
-        news = sets { traces = newl }
+    let lns = s `fetch` l
+        s'  = s `update` l $ S.insert ln lns 
 
-    put $ s { gateSets = news }
+    put s'
 
-    return l
+    return ln
 
-    where l = Line n
+    where ln = Line n
+          l = gateSets . traces
 
 lineTo :: (Out a, In0 b, MonadState Logic m) => a -> b -> Name -> m Line
 lineTo a b n = do
-    l <- newLine n
+    ln <- newLine n
     s <- get
 
-    let js    = joints s
-        new   = M.insert (out a) (in0 b) js
+    let js  = s `fetch` l
+        js' = M.insert (out ln) (in0 b) $ M.insert (out a) (in0 ln) js
+        s'  = s `update` l $ js'
 
-    put $ s { joints = new }
+    put s'
 
-    return l
+    return ln
+
+    where l = joints
