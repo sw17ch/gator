@@ -1,5 +1,14 @@
 {-# LANGUAGE TemplateHaskell, FlexibleContexts #-} 
-module Language.Gator.Logic where
+module Language.Gator.Logic (
+    GateSets,
+    orGates, andGates, traces,
+    inputs, outputs,
+
+    Logic,
+    gateSets, joints,
+
+    initL,
+) where
 
 import Data.Lenses.Template
 
