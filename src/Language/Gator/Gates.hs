@@ -1,9 +1,9 @@
 module Language.Gator.Gates (
-    module Language.Gator.Gates.OrGate,
-    module Language.Gator.Gates.AndGate,
-    module Language.Gator.Gates.Line,
-    module Language.Gator.Gates.Input,
-    module Language.Gator.Gates.Output,
+    OrGate,
+    AndGate,
+    Line,
+    Input,
+    Output,
 ) where
 
 import Language.Gator.Gates.OrGate

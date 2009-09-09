@@ -1,4 +1,6 @@
-module Language.Gator.General where
+module Language.Gator.General (
+    Name,
+) where
 
 type Name = String
 
