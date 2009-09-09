@@ -4,7 +4,7 @@ import Language.Gator.General
 import Language.Gator.IO
 
 data AndGate = AndGate Name
-    deriving (Show,Eq)
+    deriving (Show,Ord,Eq)
 
 instance Named AndGate where
     name (AndGate n) = n

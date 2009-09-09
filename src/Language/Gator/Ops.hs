@@ -5,6 +5,8 @@ module Language.Gator.Ops (
     newOutput,
     newOr,
     doOr,
+    newAnd,
+    doAnd,
     newTrace,
     lineTo,
     connect,
@@ -54,6 +56,21 @@ newOr n = do
 doOr :: (Out a, Out b, MonadState Logic m) => a -> b -> Name -> m OrGate
 doOr a b n = do
     g <- newOr n
+    (joints) $ (modify $ js g)
+    return g
+    where
+        js g = (M.insert (out b) (in1 g)) . (M.insert (out a) (in0 g))
+
+newAnd :: (MonadState Logic m) => Name -> m AndGate
+newAnd n = do
+    (gateSets . andGates) $ (modify $ S.insert g)
+    return g
+    where
+        g = AndGate n
+
+doAnd :: (Out a, Out b, MonadState Logic m) => a -> b -> Name -> m AndGate
+doAnd a b n = do
+    g <- newAnd n
     (joints) $ (modify $ js g)
     return g
     where
