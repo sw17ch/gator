@@ -4,8 +4,12 @@ module Language.Gator.Logic (
     orGates, xorGates, andGates,
     traces, inputs, outputs,
 
+    GateIDs,
+    orID, xorID, andID,
+    traceID, inputID, outputID,
+
     Logic,
-    gateSets, joints,
+    gateSets, joints, gateIDs,
 
     initL,
 ) where
@@ -38,12 +42,27 @@ initGS :: GateSets
 initGS = GateSets S.empty S.empty S.empty
                   S.empty S.empty S.empty
 
+data GateIDs = GateIDs {
+    orID_     :: Integer,
+    xorID_    :: Integer,
+    andID_    :: Integer,
+    traceID_  :: Integer,
+    inputID_  :: Integer,
+    outputID_ :: Integer
+} deriving (Show)
+
+$( deriveLenses ''GateIDs )
+
+initGI :: GateIDs
+initGI = GateIDs 0 0 0 0 0 0
+
 data Logic = Logic {
     gateSets_ :: GateSets,
-    joints_   :: Joints
+    joints_   :: Joints,
+    gateIDs_  :: GateIDs
 } deriving (Show)
 
 $( deriveLenses ''Logic )
 
 initL :: Logic
-initL = Logic initGS M.empty
+initL = Logic initGS M.empty initGI

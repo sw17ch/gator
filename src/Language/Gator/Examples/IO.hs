@@ -15,9 +15,9 @@ compileExampleIO = do
 gatesIO :: StateT Logic IO ()
 gatesIO = do
     lift $ putStrLn "gatesIO"
-    in0  <- newInput "in0"
-    in1  <- newInput "in1"
-    out0 <- newOutput "out0"
+    in0  <- newInput
+    in1  <- newInput
+    out0 <- newOutput
 
-    o <- doOr in0 in1 "or0"
+    o <- doOr in0 in1
     connect o out0

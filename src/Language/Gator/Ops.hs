@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleContexts, RankNTypes #-}
 module Language.Gator.Ops (
     compile,
     newInput,
@@ -23,8 +23,10 @@ import Language.Gator.Gates.Input
 import Language.Gator.Gates.Output
 import Language.Gator.Gates.Trace
 import Language.Gator.Gates.AndGate
-import Language.Gator.Gates.OrGate
-import Language.Gator.Gates.XOrGate
+
+import Language.Gator.Ops.OR
+import Language.Gator.Ops.XOR
+
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -41,43 +43,12 @@ newInput n = do
     where
         g = Input n
 
-
 newOutput :: (MonadState Logic m) => Name -> m Output
 newOutput n = do
     (gateSets . outputs) $ (modify $ S.insert g)
     return g
     where
         g = Output n
-
-newOr :: (MonadState Logic m) => Name -> m OrGate
-newOr n = do
-    (gateSets . orGates) $ (modify $ S.insert g)
-    return g
-    where
-        g = OrGate n
-
-doOr :: (Out a, Out b, MonadState Logic m) => a -> b -> Name -> m OrGate
-doOr a b n = do
-    g <- newOr n
-    (joints) $ (modify $ js g)
-    return g
-    where
-        js g = (M.insert (out b) (in1 g)) . (M.insert (out a) (in0 g))
-
-newXOr :: (MonadState Logic m) => Name -> m XOrGate
-newXOr n = do
-    (gateSets . xorGates) $ (modify $ S.insert g)
-    return g
-    where
-        g = XOrGate n
-
-doXOr :: (Out a, Out b, MonadState Logic m) => a -> b -> Name -> m XOrGate
-doXOr a b n = do
-    g <- newXOr n
-    (joints) $ (modify $ js g)
-    return g
-    where
-        js g = (M.insert (out b) (in1 g)) . (M.insert (out a) (in0 g))
 
 newAnd :: (MonadState Logic m) => Name -> m AndGate
 newAnd n = do
