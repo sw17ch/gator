@@ -14,6 +14,7 @@ import Data.Lenses.Template
 
 import Language.Gator.General
 import Language.Gator.Gates
+import Language.Gator.IO
 
 import Data.Map (Map)
 import qualified Data.Map as M
@@ -21,7 +22,7 @@ import qualified Data.Map as M
 import Data.Set (Set)
 import qualified Data.Set as S
 
-type Joints = Map Name Name
+type Joints = Map OutName InName
 
 data GateSets = GateSets {
     orGates_  :: Set OrGate,
