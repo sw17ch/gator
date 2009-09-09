@@ -8,6 +8,8 @@ module Language.Gator.Ops (
     newTrace,
     lineTo,
     connect,
+    connect1,
+    connectWithIn,
 ) where
 
 import Language.Gator.General
@@ -73,7 +75,13 @@ lineTo a b n = do
         js g = (M.insert (out g) (in0 b)) . (M.insert (out a) (in0 g))
 
 connect :: (Out a, In0 b, MonadState Logic m) => a -> b -> m ()
-connect a b = do
+connect = connectWithIn in0
+
+connect1 :: (Out a, In1 b, MonadState Logic m) => a -> b -> m ()
+connect1 = connectWithIn in1
+
+connectWithIn :: (MonadState Logic m, Out a) => (b -> InName) -> a -> b -> m ()
+connectWithIn inN a b = do
     (joints) $ (modify $ js)
     where
-        js = M.insert (out a) (in0 b)
+        js = M.insert (out a) (inN b)
