@@ -20,7 +20,7 @@ library
                    lenses >= 0.1.2 && < 0.2
     other-modules: Language.Gator.Gates.AndGate,
                    Language.Gator.Gates.Input,
-                   Language.Gator.Gates.Line,
+                   Language.Gator.Gates.Trace,
                    Language.Gator.Gates.OrGate,
                    Language.Gator.Gates.Output
     exposed-modules: Language.Gator,

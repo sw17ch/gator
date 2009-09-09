@@ -5,7 +5,7 @@ module Language.Gator.Ops (
     newOutput,
     newOr,
     doOr,
-    newLine,
+    newTrace,
     lineTo,
 ) where
 
@@ -15,7 +15,7 @@ import Language.Gator.IO
 
 import Language.Gator.Gates.Input
 import Language.Gator.Gates.Output
-import Language.Gator.Gates.Line
+import Language.Gator.Gates.Trace
 import Language.Gator.Gates.AndGate
 import Language.Gator.Gates.OrGate
 
@@ -87,8 +87,8 @@ doOr a b n = do
     return g
     where l = joints
 
-newLine :: (MonadState Logic m) => Name -> m Line
-newLine n = do
+newTrace :: (MonadState Logic m) => Name -> m Trace
+newTrace n = do
     s <- get
 
     let lns = s `fetch` l
@@ -98,12 +98,12 @@ newLine n = do
 
     return ln
 
-    where ln = Line n
+    where ln = Trace n
           l = gateSets . traces
 
-lineTo :: (Out a, In0 b, MonadState Logic m) => a -> b -> Name -> m Line
+lineTo :: (Out a, In0 b, MonadState Logic m) => a -> b -> Name -> m Trace
 lineTo a b n = do
-    ln <- newLine n
+    ln <- newTrace n
     s <- get
 
     let js  = s `fetch` l

@@ -17,7 +17,7 @@ type Joints = Map Name Name
 data GateSets = GateSets {
     orGates_  :: Set OrGate,
     andGates_ :: Set AndGate,
-    traces_   :: Set Line,
+    traces_   :: Set Trace,
     inputs_   :: Set Input,
     outputs_  :: Set Output
 } deriving (Show)
