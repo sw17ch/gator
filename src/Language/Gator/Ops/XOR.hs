@@ -1,5 +1,10 @@
 {-# LANGUAGE FlexibleContexts #-}
-module Language.Gator.Ops.XOR where
+module Language.Gator.Ops.XOR (
+    newXOr,
+    newXOrN,
+    doXOr,
+    doXOrN,
+) where
 
 import Control.Monad.State
 import Language.Gator.Logic
@@ -17,16 +22,24 @@ nextXOR = do
     idx <- nextIdxOf xorID
     return $ "xor" ++ (show idx)
 
-newXOr :: (MonadState Logic m) => Name -> m XOrGate
-newXOr n = do
+newXOr :: (MonadState Logic m) => m XOrGate
+newXOr = nextXOR >>= newXOrN
+
+doXOr :: (Out a, Out b, MonadState Logic m) => a -> b -> m XOrGate
+doXOr a b = do
+    n <- nextXOR
+    doXOrN n a b
+
+newXOrN :: (MonadState Logic m) => Name -> m XOrGate
+newXOrN n = do
     (gateSets . xorGates) $ (modify $ S.insert g)
     return g
     where
         g = XOrGate n
 
-doXOr :: (Out a, Out b, MonadState Logic m) => a -> b -> Name -> m XOrGate
-doXOr a b n = do
-    g <- newXOr n
+doXOrN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m XOrGate
+doXOrN n a b = do
+    g <- newXOrN n
     (joints) $ (modify $ js g)
     return g
     where

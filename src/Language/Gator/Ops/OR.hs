@@ -23,9 +23,7 @@ nextOR = do
     return $ "or" ++ (show idx)
 
 newOr :: (MonadState Logic m) => m OrGate
-newOr = do
-    n <- nextOR
-    newOrN n
+newOr = nextOR >>= newOrN 
 
 doOr :: (Out a, Out b, MonadState Logic m) => a -> b -> m OrGate
 doOr a b = do

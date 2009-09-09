@@ -15,11 +15,11 @@ compileExampleErr = do
 
 gatesErr :: (MonadError String m, MonadState Logic m) => m ()
 gatesErr = do
-    in0  <- newInput "in0"
-    out0 <- newOutput "out0"
+    in0  <- newInput
+    out0 <- newOutput
 
     throwError "Whoops"
 
-    lineTo in0 out0 "ln0"
+    traceTo in0 out0
     return ()
 

@@ -30,6 +30,13 @@ library
                      Language.Gator.IO,
                      Language.Gator.Logic,
                      Language.Gator.Ops,
+                     Language.Gator.Ops.NextIDX,
+                     Language.Gator.Ops.AND,
+                     Language.Gator.Ops.OR,
+                     Language.Gator.Ops.XOR,
+                     Language.Gator.Ops.Trace,
+                     Language.Gator.Ops.Input,
+                     Language.Gator.Ops.Output,
                      Language.Gator.Examples.Err,
                      Language.Gator.Examples.IO
     hs-source-dirs: src/
