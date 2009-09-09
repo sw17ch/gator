@@ -16,14 +16,15 @@ cabal-version: >= 1.2.0
 library
     build-depends: base >= 4 && < 5,
                    mtl >= 1.1.0.2 && < 1.2,
-                   containers >= 0.2.0.1 && < 0.3
+                   containers >= 0.2.0.1 && < 0.3,
+                   lenses >= 0.1.2 && < 0.2
+    other-modules: Language.Gator.Gates.AndGate,
+                   Language.Gator.Gates.Input,
+                   Language.Gator.Gates.Line,
+                   Language.Gator.Gates.OrGate,
+                   Language.Gator.Gates.Output
     exposed-modules: Language.Gator,
                      Language.Gator.Gates,
-                     Language.Gator.Gates.AndGate,
-                     Language.Gator.Gates.Input,
-                     Language.Gator.Gates.Line,
-                     Language.Gator.Gates.OrGate,
-                     Language.Gator.Gates.Output,
                      Language.Gator.General,
                      Language.Gator.IO,
                      Language.Gator.Logic,
