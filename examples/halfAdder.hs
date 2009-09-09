@@ -2,7 +2,6 @@
 module Main where
 
 import Language.Gator
-import Control.Monad.State
 
 main :: IO ()
 main = do
