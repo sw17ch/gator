@@ -12,7 +12,6 @@ module Language.Gator.Logic (
 
 import Data.Lenses.Template
 
-import Language.Gator.General
 import Language.Gator.Gates
 import Language.Gator.IO
 
