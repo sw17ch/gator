@@ -3,8 +3,10 @@ module Language.Gator.IO (
     Out(..),
     In0(..),
     In1(..),
-    OutName,
-    InName,
+    OutName(..),
+    InName(..),
+    outNameToName,
+    inNameToName,
 ) where
 
 import Language.Gator.General
@@ -24,5 +26,11 @@ class (Named a, In0 a) => In1 a where
     in1 :: a -> InName
     in1 a = InName $ (name a) ++ ".in1"
 
-newtype OutName = OutName Name deriving (Show,Ord,Eq)
-newtype InName  = InName  Name deriving (Show,Ord,Eq)
+newtype OutName = OutName { unOut :: Name } deriving (Show,Ord,Eq)
+newtype InName  = InName  { unIn  :: Name } deriving (Show,Ord,Eq)
+
+outNameToName :: OutName -> Name
+outNameToName (OutName n) = takeWhile (/= '.') n
+
+inNameToName  :: InName  -> Name
+inNameToName (InName n)  = takeWhile (/= '.') n

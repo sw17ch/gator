@@ -12,12 +12,18 @@ module Language.Gator.Logic (
     gateSets, joints, gateIDs,
 
     initL,
+
+    mkGr,
 ) where
 
 import Data.Lenses.Template
 
+import Language.Gator.General
 import Language.Gator.Gates
 import Language.Gator.IO
+
+import Data.Graph.Inductive.Graph
+import Data.Graph.Inductive.Tree
 
 import Data.Map (Map)
 import qualified Data.Map as M
@@ -66,3 +72,32 @@ $( deriveLenses ''Logic )
 
 initL :: Logic
 initL = Logic initGS M.empty initGI
+
+mkGr :: Logic -> Gr Name Name
+mkGr (Logic gs js _) = 
+    let lnodes = map swap ns
+    in  mkGraph lnodes ledges
+    where
+        ledges :: [LEdge Name]
+        ledges = let es = M.toList js
+                 in  map mkLEdge es
+
+        mkLEdge :: (OutName,InName) -> LEdge Name
+        mkLEdge (s1,s2) = let (Just n1) = lookup (outNameToName s1) ns
+                              (Just n2) = lookup (inNameToName  s2) ns
+                              n  = (unOut s1) ++ " -> " ++ (unIn s2)
+                          in (n1,n2,n)
+
+        ns :: [(Name,Node)]
+        ns = zip names [1..]
+
+        names = concat [
+                map name $ S.toList $ orGates_  gs,
+                map name $ S.toList $ xorGates_ gs,
+                map name $ S.toList $ andGates_ gs,
+                map name $ S.toList $ traces_   gs,
+                map name $ S.toList $ inputs_   gs,
+                map name $ S.toList $ outputs_  gs
+            ]
+
+        swap (a,b) = (b,a)
