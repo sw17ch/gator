@@ -1,5 +1,6 @@
 module Language.Gator.Gates (
     OrGate,
+    XOrGate,
     AndGate,
     Trace,
     Input,
@@ -7,6 +8,7 @@ module Language.Gator.Gates (
 ) where
 
 import Language.Gator.Gates.OrGate
+import Language.Gator.Gates.XOrGate
 import Language.Gator.Gates.AndGate
 import Language.Gator.Gates.Trace
 import Language.Gator.Gates.Input

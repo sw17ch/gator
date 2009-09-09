@@ -1,8 +1,8 @@
 {-# LANGUAGE TemplateHaskell, FlexibleContexts #-} 
 module Language.Gator.Logic (
     GateSets,
-    orGates, andGates, traces,
-    inputs, outputs,
+    orGates, xorGates, andGates,
+    traces, inputs, outputs,
 
     Logic,
     gateSets, joints,
@@ -25,6 +25,7 @@ type Joints = Map OutName InName
 
 data GateSets = GateSets {
     orGates_  :: Set OrGate,
+    xorGates_ :: Set XOrGate,
     andGates_ :: Set AndGate,
     traces_   :: Set Trace,
     inputs_   :: Set Input,
@@ -34,7 +35,8 @@ data GateSets = GateSets {
 $( deriveLenses ''GateSets )
 
 initGS :: GateSets
-initGS = GateSets S.empty S.empty S.empty S.empty S.empty 
+initGS = GateSets S.empty S.empty S.empty
+                  S.empty S.empty S.empty
 
 data Logic = Logic {
     gateSets_ :: GateSets,

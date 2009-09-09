@@ -22,6 +22,7 @@ library
                    Language.Gator.Gates.Input,
                    Language.Gator.Gates.Trace,
                    Language.Gator.Gates.OrGate,
+                   Language.Gator.Gates.XOrGate,
                    Language.Gator.Gates.Output
     exposed-modules: Language.Gator,
                      Language.Gator.Gates,
