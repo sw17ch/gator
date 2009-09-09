@@ -1,9 +1,7 @@
-module Language.Gator.Logic (
-    Joints,
-    GateSets(..),
-    Logic(..),
-    initL,
-) where
+{-# LANGUAGE TemplateHaskell, FlexibleContexts #-} 
+module Language.Gator.Logic where
+
+import Data.Lenses.Template
 
 import Language.Gator.General
 import Language.Gator.Gates
@@ -17,20 +15,24 @@ import qualified Data.Set as S
 type Joints = Map Name Name
 
 data GateSets = GateSets {
-    orGates :: Set OrGate,
-    andGates :: Set AndGate,
-    traces :: Set Line,
-    inputs :: Set Input,
-    outputs :: Set Output
+    orGates_  :: Set OrGate,
+    andGates_ :: Set AndGate,
+    traces_   :: Set Line,
+    inputs_   :: Set Input,
+    outputs_  :: Set Output
 } deriving (Show)
+
+$( deriveLenses ''GateSets )
 
 initGS :: GateSets
 initGS = GateSets S.empty S.empty S.empty S.empty S.empty 
 
 data Logic = Logic {
-    gateSets :: GateSets,
-    joints   :: Joints
+    gateSets_ :: GateSets,
+    joints_   :: Joints
 } deriving (Show)
+
+$( deriveLenses ''Logic )
 
 initL :: Logic
 initL = Logic initGS M.empty
