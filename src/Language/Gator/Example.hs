@@ -1,17 +1,13 @@
 {-# LANGUAGE RankNTypes #-}
-module Main where
+module Language.Gator.Example where
 
-import IO
-import General
-import Gates
-import Logic
-
-import Ops
+import Language.Gator.Ops
 
 main :: IO ()
 main = do
     print $ compile gates
 
+gates :: m ()
 gates = do
     in0  <- newInput "in0"
     in1  <- newInput "in1"
@@ -19,6 +15,7 @@ gates = do
 
     o <- doOr in0 in1 "or0"
     lineTo o out0 "ln0"
+    return ()
 
     {- Produces:
      -  Logic {
