@@ -1,20 +1,20 @@
-module Ops where
+{-# LANGUAGE FlexibleContexts #-}
+module Language.Gator.Ops where
 
-import Logic
-import General
-import Gates
-import IO
+import Language.Gator.General
+import Language.Gator.Logic
+import Language.Gator.Gates
+import Language.Gator.IO
 
-import Data.Map (Map)
 import qualified Data.Map as M
-
-import Data.Set (Set)
 import qualified Data.Set as S
 
 import Control.Monad.State
 
+compile :: State Logic a -> Logic
 compile g = execState g initL
 
+newInput :: (MonadState Logic m) => Name -> m Input
 newInput n = do
     s <- get
 
@@ -30,6 +30,7 @@ newInput n = do
     where g = Input n
 
 
+newOutput :: (MonadState Logic m) => Name -> m Output
 newOutput n = do
     s <- get
 
@@ -44,6 +45,7 @@ newOutput n = do
 
     where g = Output n
 
+newOr :: (MonadState Logic m) => Name -> m OrGate
 newOr n = do
     s <- get
 
@@ -58,6 +60,7 @@ newOr n = do
 
     where g = OrGate n
 
+doOr :: (Out a, Out b, MonadState Logic m) => a -> b -> Name -> m OrGate
 doOr a b n = do
     g <- newOr n
     s <- get
@@ -70,6 +73,7 @@ doOr a b n = do
 
     return g
 
+newLine :: (MonadState Logic m) => Name -> m Line
 newLine n = do
     s <- get
 
@@ -84,6 +88,7 @@ newLine n = do
 
     where l = Line n
 
+lineTo :: (Out a, In0 b, MonadState Logic m) => a -> b -> Name -> m Line
 lineTo a b n = do
     l <- newLine n
     s <- get

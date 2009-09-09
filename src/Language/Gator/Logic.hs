@@ -1,7 +1,12 @@
-module Logic where
+module Language.Gator.Logic (
+    Joints,
+    GateSets(..),
+    Logic(..),
+    initL,
+) where
 
-import General
-import Gates
+import Language.Gator.General
+import Language.Gator.Gates
 
 import Data.Map (Map)
 import qualified Data.Map as M
@@ -27,4 +32,5 @@ data Logic = Logic {
     joints   :: Joints
 } deriving (Show)
 
+initL :: Logic
 initL = Logic initGS M.empty

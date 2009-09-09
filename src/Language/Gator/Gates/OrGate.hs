@@ -1,7 +1,7 @@
-module OrGate where
+module Language.Gator.Gates.OrGate where
 
-import General
-import IO
+import Language.Gator.General
+import Language.Gator.IO
 
 data OrGate = OrGate Name
     deriving (Show,Eq,Ord)

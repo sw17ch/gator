@@ -1,7 +1,7 @@
-module AndGate where
+module Language.Gator.Gates.AndGate where
 
-import General
-import IO
+import Language.Gator.General
+import Language.Gator.IO
 
 data AndGate = AndGate Name
     deriving (Show,Eq)

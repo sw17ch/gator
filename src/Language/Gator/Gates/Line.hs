@@ -1,7 +1,7 @@
-module Line where
+module Language.Gator.Gates.Line where
 
-import General
-import IO
+import Language.Gator.General
+import Language.Gator.IO
 
 data Line = Line Name
     deriving (Show,Eq,Ord)
