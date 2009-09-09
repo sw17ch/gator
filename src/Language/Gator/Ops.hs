@@ -14,7 +14,8 @@ import Control.Monad.Error
 
 --compile :: State Logic a -> Logic
 -- evalStateT :: Monad m => StateT s m a -> s -> m a
-compile :: StateT Logic (Either String) a -> Either String Logic
+-- compile :: StateT Logic (Either String) a -> Either String Logic
+compile :: (Monad m) => StateT Logic m a -> m Logic
 compile g = execStateT g initL
 
 newInput :: (MonadState Logic m) => Name -> m Input
