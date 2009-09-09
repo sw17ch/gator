@@ -1,5 +1,5 @@
 {-# LANGUAGE FlexibleContexts #-}
-module Language.Gator.Example where
+module Language.Gator.Examples where
 
 import Language.Gator.Ops
 import Language.Gator.Logic

@@ -1,6 +1,6 @@
 module Main where
 
-import Language.Gator.Example
+import Language.Gator.Examples
 
 main :: IO ()
 main = do
