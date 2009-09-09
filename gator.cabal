@@ -18,6 +18,17 @@ library
                    mtl >= 1.1.0.2 && < 1.2,
                    containers >= 0.2.0.1 && < 0.3
     exposed-modules: Language.Gator,
-                     Language.Gator.Examples
+                     Language.Gator.Gates,
+                     Language.Gator.Gates.AndGate,
+                     Language.Gator.Gates.Input,
+                     Language.Gator.Gates.Line,
+                     Language.Gator.Gates.OrGate,
+                     Language.Gator.Gates.Output,
+                     Language.Gator.General,
+                     Language.Gator.IO,
+                     Language.Gator.Logic,
+                     Language.Gator.Ops,
+                     Language.Gator.Examples.Err,
+                     Language.Gator.Examples.IO
     hs-source-dirs: src/
     ghc-options: -Wall
