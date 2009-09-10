@@ -80,7 +80,10 @@ mkGr (Logic gs js _) =
     where
         ledges :: [LEdge Name]
         ledges = let es = M.toList js
-                 in  map mkLEdge (concatMap x es)
+                 in  map mkLEdge (concatMap xpnd es)
+
+        xpnd :: (OutName,[InName]) -> [(OutName,InName)]
+        xpnd (o,is) = zip (repeat o) is
 
         mkLEdge :: (OutName,InName) -> LEdge Name
         mkLEdge (s1,s2) = let (Just n1) = lookup (outNameToName s1) ns
@@ -103,5 +106,3 @@ mkGr (Logic gs js _) =
         swap (a,b) = (b,a)
 
 
-x :: (OutName,[InName]) -> [(OutName,InName)]
-x (o,is) = zip (repeat o) is
