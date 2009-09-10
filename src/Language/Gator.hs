@@ -12,7 +12,6 @@ module Language.Gator (
 
 import Data.GraphViz
 import Data.GraphViz.Types
-import System.IO.Unsafe
 
 -- All below here is exported
 import Language.Gator.General
@@ -28,8 +27,7 @@ import Control.Monad.State
 
 mkDot :: Logic -> String
 mkDot l = let g = mkGr l
-              dot = graphToDot False g [] nods edgs
-              x = unsafePerformIO $ print g
-          in x `seq` printDotGraph dot 
+              dot = graphToDot True g [] nods edgs
+          in printDotGraph dot 
     where edgs (_,_,_) = [] -- [Label $ StrLabel $ n]
           nods (_,n) = [Label $ StrLabel $ n]
