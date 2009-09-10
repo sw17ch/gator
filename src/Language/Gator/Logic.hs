@@ -31,7 +31,7 @@ import qualified Data.Map as M
 import Data.Set (Set)
 import qualified Data.Set as S
 
-type Joints = Map OutName InName
+type Joints = Map OutName [InName]
 
 data GateSets = GateSets {
     orGates_  :: Set OrGate,
@@ -80,12 +80,12 @@ mkGr (Logic gs js _) =
     where
         ledges :: [LEdge Name]
         ledges = let es = M.toList js
-                 in  map mkLEdge es
+                 in  map mkLEdge (concatMap x es)
 
         mkLEdge :: (OutName,InName) -> LEdge Name
         mkLEdge (s1,s2) = let (Just n1) = lookup (outNameToName s1) ns
                               (Just n2) = lookup (inNameToName  s2) ns
-                              n  = (unOut s1) ++ " -> " ++ (unIn s2)
+                              n = (unOut s1) ++ " -> " ++ (unIn s2)
                           in (n1,n2,n)
 
         ns :: [(Name,Node)]
@@ -101,3 +101,7 @@ mkGr (Logic gs js _) =
             ]
 
         swap (a,b) = (b,a)
+
+
+x :: (OutName,[InName]) -> [(OutName,InName)]
+x (o,is) = zip (repeat o) is

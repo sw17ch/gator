@@ -43,5 +43,6 @@ doAndN n a b = do
     (joints) $ (modify $ js g)
     return g
     where
-        js g = (M.insert (out b) (in1 g)) . (M.insert (out a) (in0 g))
+        iw = M.insertWith (flip (++))
+        js g = (iw (out b) [(in1 g)]) . (iw (out a) [(in0 g)])
 
