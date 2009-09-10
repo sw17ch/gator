@@ -32,7 +32,7 @@ library
                      Language.Gator.IO,
                      Language.Gator.Logic,
                      Language.Gator.Ops,
-                     Language.Gator.Ops.NextIDX,
+                     Language.Gator.Ops.General,
                      Language.Gator.Ops.AND,
                      Language.Gator.Ops.OR,
                      Language.Gator.Ops.XOR,

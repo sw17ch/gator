@@ -40,4 +40,4 @@ connectWithIn :: (MonadState Logic m, Out a) => (b -> InName) -> a -> b -> m ()
 connectWithIn inN a b = do
     (joints) $ (modify $ js)
     where
-        js = M.insert (out a) (inN b)
+        js = M.insertWith (flip (++)) (out a) [(inN b)]

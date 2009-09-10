@@ -12,7 +12,7 @@ import Language.Gator.General
 import Language.Gator.IO
 import Language.Gator.Gates.Trace
 
-import Language.Gator.Ops.NextIDX
+import Language.Gator.Ops.General
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -43,4 +43,5 @@ traceToN n a b = do
     (joints) $ (modify $ js g)
     return g 
     where
-        js g = (M.insert (out g) (in0 b)) . (M.insert (out a) (in0 g))
+        iw = M.insertWith (flip (++))
+        js g = (iw (out g) [(in0 b)]) . (iw (out a) [(in0 g)])

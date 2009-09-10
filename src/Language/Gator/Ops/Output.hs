@@ -7,7 +7,7 @@ module Language.Gator.Ops.Output (
 import Language.Gator.Logic
 import Language.Gator.General
 import Language.Gator.Gates.Output
-import Language.Gator.Ops.NextIDX
+import Language.Gator.Ops.General
 
 import Control.Monad.State
 import qualified Data.Set as S

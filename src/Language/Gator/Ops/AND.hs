@@ -12,7 +12,7 @@ import Language.Gator.General
 import Language.Gator.IO
 import Language.Gator.Gates.AndGate
 
-import Language.Gator.Ops.NextIDX
+import Language.Gator.Ops.General
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -38,6 +38,8 @@ newAndN n = do
         g = AndGate n
 
 doAndN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m AndGate
+doAndN = doOp2N newAndN
+{-
 doAndN n a b = do
     g <- newAndN n
     (joints) $ (modify $ js g)
@@ -45,4 +47,4 @@ doAndN n a b = do
     where
         iw = M.insertWith (flip (++))
         js g = (iw (out b) [(in1 g)]) . (iw (out a) [(in0 g)])
-
+-}
