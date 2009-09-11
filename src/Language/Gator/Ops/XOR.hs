@@ -14,7 +14,6 @@ import Language.Gator.Gates.XOrGate
 
 import Language.Gator.Ops.General
 
-import qualified Data.Map as M
 import qualified Data.Set as S
 
 nextXOR :: (MonadState Logic m) => m Name
@@ -39,11 +38,3 @@ newXOrN n = do
 
 doXOrN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m XOrGate
 doXOrN = doOp2N newXOrN
-{-
-doXOrN n a b = do
-    g <- newXOrN n
-    (joints) $ (modify $ js g)
-    return g
-    where
-        js g = (M.insert (out b) (in1 g)) . (M.insert (out a) (in0 g))
--}
