@@ -6,7 +6,10 @@ import Language.Gator
 main :: IO ()
 main = do
     l <- compile logic
+    putStrLn "/* "
     print l
+    putStrLn " */"
+    putStrLn $ mkDot l
 
 logic :: StateT Logic IO ()
 logic = do

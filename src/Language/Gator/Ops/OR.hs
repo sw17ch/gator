@@ -14,7 +14,6 @@ import Language.Gator.Gates.OrGate
 
 import Language.Gator.Ops.General
 
-import qualified Data.Map as M
 import qualified Data.Set as S
 
 nextOR :: (MonadState Logic m) => m Name
@@ -39,12 +38,3 @@ newOrN n = do
 
 doOrN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m OrGate
 doOrN = doOp2N newOrN
-{-
-doOrN n a b = do
-    g <- newOrN n
-    (joints) $ (modify $ js g)
-    return g
-    where
-        iw = M.insertWith (flip (++))
-        js g = (iw (out b) [(in1 g)]) . (iw (out a) [(in0 g)])
--}
