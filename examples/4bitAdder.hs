@@ -36,11 +36,12 @@ logic = do
     (s2,c2) <- fullAdder inA2 inB2 c1
     (s3,c3) <- fullAdder inA3 inB3 c2
 
-    connect s0 out0
-    connect s1 out1
-    connect s2 out2
-    connect s3 out3
-    connect c3 outC
+    s0 `connect` out0
+    s1 `connect` out1
+    s2 `connect` out2
+    s3 `connect` out3
+
+    c3 `connect` outC
 
 {-
  - A Full Adder.
@@ -48,12 +49,12 @@ logic = do
  -}
 fullAdder :: (Out a, Out b, Out c, MonadState Logic m) => a -> b -> c -> m (XOrGate, OrGate)
 fullAdder inA inB inC = do
-    xor0 <- doXOr inA inB
-    xor1 <- doXOr xor0 inC
+    xor0 <- inA `doXOr` inB
+    xor1 <- xor0 `doXOr` inC
 
-    and0 <- doAnd xor0 inC
-    and1 <- doAnd inA inB
+    and0 <- xor0 `doAnd` inC
+    and1 <- inA `doAnd` inB
 
-    or0  <- doOr  and0 and1
+    or0  <- and0 `doOr` and1
         
     return (xor1,or0)
