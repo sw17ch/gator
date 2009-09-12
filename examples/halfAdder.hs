@@ -27,7 +27,7 @@ logic = do
  - A Half Adder.
  - See: http://en.wikipedia.org/wiki/Adder_(electronics)#Half_adder
  -}
-halfAdder :: (Out a, Out b, MonadState Logic m) => a -> b -> m (XOrGate, AndGate)
+halfAdder :: (Out a, Out b, MonadState Logic m) => a -> b -> m (XOR, AND)
 halfAdder inA inB = do
     xor <- doXOr inA inB
     and <- doAnd inA inB

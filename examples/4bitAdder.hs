@@ -47,7 +47,7 @@ logic = do
  - A Full Adder.
  - See: http://en.wikipedia.org/wiki/Adder_(electronics)#Full_adder
  -}
-fullAdder :: (Out a, Out b, Out c, MonadState Logic m) => a -> b -> c -> m (XOrGate, OrGate)
+fullAdder :: (Out a, Out b, Out c, MonadState Logic m) => a -> b -> c -> m (XOR, OR)
 fullAdder inA inB inC = do
     xor0 <- inA `doXOr` inB
     xor1 <- xor0 `doXOr` inC
