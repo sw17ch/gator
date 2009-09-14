@@ -1,11 +1,6 @@
 {-# LANGUAGE TemplateHaskell, FlexibleContexts #-} 
 module Language.Gator.Logic (
     GateSet,
-    {-
-    GateSets,
-    orGates, xorGates, andGates,
-    traces, inputs, outputs,
-    -}
 
     GateIDs,
     orID, xorID, andID,
@@ -31,24 +26,6 @@ import Data.Map (Map)
 import qualified Data.Map as M
 
 type Joints = Map OutName [InName]
-
-{-
-data GateSets = GateSets {
-    orGates_  :: Set OR,
-    xorGates_ :: Set XOR,
-    andGates_ :: Set AND,
-    traces_   :: Set Trace,
-    inputs_   :: Set Input,
-    outputs_  :: Set Output
-} deriving (Show)
-
-$( deriveLenses ''GateSets )
-
-initGS :: GateSets
-initGS = GateSets S.empty S.empty S.empty
-                  S.empty S.empty S.empty
--}
-
 type GateSet = [Gate]
 
 initGS :: GateSet
