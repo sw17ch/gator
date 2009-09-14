@@ -22,9 +22,10 @@ newInput = nextInput >>= newInputN
 
 newInputN :: (MonadState Logic m) => Name -> m Input
 newInputN n = do
-    gateSets $ modify (g':)
-    return g
-    where
-        g = Input n
+    i <- nextGateID
+
+    let g  = Input n i
         g' = G_Input g
 
+    gateSets $ modify (g':)
+    return g

@@ -8,9 +8,12 @@ module Language.Gator.IO (
     outNameToName,
     inNameToName,
     Name,
+    GateID,
 ) where
 
 import Language.Gator.General
+
+type GateID = Integer
 
 class Named a where
     name :: a -> Name

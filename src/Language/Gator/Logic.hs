@@ -8,7 +8,8 @@ module Language.Gator.Logic (
     traceID, inputID, outputID,
 
     Logic,
-    gateSets, joints, gateIDs,
+    nextGID, gateSets,
+    joints, gateIDs,
 
     initL,
 
@@ -53,6 +54,7 @@ initGI :: GateIDs
 initGI = GateIDs 0 0 0 0 0 0
 
 data Logic = Logic {
+    nextGID_  :: GateID,
     gateSets_ :: GateSet,
     joints_   :: Joints,
     gateIDs_  :: GateIDs
@@ -61,10 +63,10 @@ data Logic = Logic {
 $( deriveLenses ''Logic )
 
 initL :: Logic
-initL = Logic initGS M.empty initGI
+initL = Logic 0 initGS M.empty initGI
 
 mkGr :: Logic -> Gr Name Name
-mkGr (Logic gs js _) = 
+mkGr (Logic _ gs js _) = 
     let lnodes = map swap ns
     in  mkGraph lnodes ledges
     where

@@ -1,5 +1,6 @@
 {-# LANGUAGE FlexibleContexts, RankNTypes #-}
 module Language.Gator.Ops.General (
+    nextGateID,
     nextIdxOf,
     doOp2N,
 ) where
@@ -11,6 +12,9 @@ import qualified Data.Map as M
 
 import Language.Gator.Logic
 import Language.Gator.IO
+
+nextGateID :: (MonadState Logic m) => m GateID
+nextGateID = nextGID $ getAndModify (+1)
 
 nextIdxOf :: (MonadState Logic m, Num s, MonadState s n) =>
              (n s -> StateT GateIDs m b) -> m b
