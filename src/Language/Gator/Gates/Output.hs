@@ -1,6 +1,5 @@
 module Language.Gator.Gates.Output where
 
-import Language.Gator.General
 import Language.Gator.IO
 
 data Output = Output Name

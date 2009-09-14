@@ -2,7 +2,6 @@ module Language.Gator.Gates.XOR (
     XOR(..),
 ) where
 
-import Language.Gator.General
 import Language.Gator.IO
 
 data XOR = XOR Name

@@ -1,6 +1,5 @@
 module Language.Gator.Gates.Input where
 
-import Language.Gator.General
 import Language.Gator.IO
 
 data Input = Input Name

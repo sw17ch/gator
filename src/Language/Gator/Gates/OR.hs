@@ -1,6 +1,5 @@
 module Language.Gator.Gates.OR where
 
-import Language.Gator.General
 import Language.Gator.IO
 
 data OR = OR Name

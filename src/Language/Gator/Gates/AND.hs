@@ -1,6 +1,5 @@
 module Language.Gator.Gates.AND where
 
-import Language.Gator.General
 import Language.Gator.IO
 
 data AND = AND Name

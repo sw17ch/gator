@@ -1,6 +1,5 @@
 module Language.Gator.Gates.Trace where
 
-import Language.Gator.General
 import Language.Gator.IO
 
 data Trace = Trace Name
