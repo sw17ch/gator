@@ -34,9 +34,9 @@ import qualified Data.Set as S
 type Joints = Map OutName [InName]
 
 data GateSets = GateSets {
-    orGates_  :: Set OrGate,
-    xorGates_ :: Set XOrGate,
-    andGates_ :: Set AndGate,
+    orGates_  :: Set OR,
+    xorGates_ :: Set XOR,
+    andGates_ :: Set AND,
     traces_   :: Set Trace,
     inputs_   :: Set Input,
     outputs_  :: Set Output

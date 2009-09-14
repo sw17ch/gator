@@ -20,11 +20,11 @@ library
                    lenses >= 0.1.2 && < 0.2,
                    fgl >= 5.4.2.2 && < 5.5,
                    graphviz >= 2999.5.0.0 && < 2999.6
-    other-modules: Language.Gator.Gates.AndGate,
+    other-modules: Language.Gator.Gates.AND,
+                   Language.Gator.Gates.OR,
+                   Language.Gator.Gates.XOR,
                    Language.Gator.Gates.Input,
                    Language.Gator.Gates.Trace,
-                   Language.Gator.Gates.OrGate,
-                   Language.Gator.Gates.XOrGate,
                    Language.Gator.Gates.Output
     exposed-modules: Language.Gator,
                      Language.Gator.Gates,

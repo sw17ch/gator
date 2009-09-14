@@ -10,7 +10,7 @@ import Control.Monad.State
 import Language.Gator.Logic
 import Language.Gator.General
 import Language.Gator.IO
-import Language.Gator.Gates.AndGate
+import Language.Gator.Gates.AND
 
 import Language.Gator.Ops.General
 
@@ -21,20 +21,20 @@ nextAND = do
     idx <- nextIdxOf andID
     return $ "and" ++ (show idx)
 
-newAnd :: (MonadState Logic m) => m AndGate
+newAnd :: (MonadState Logic m) => m AND
 newAnd = nextAND >>= newAndN
 
-doAnd :: (Out a, Out b, MonadState Logic m) => a -> b -> m AndGate
+doAnd :: (Out a, Out b, MonadState Logic m) => a -> b -> m AND
 doAnd a b = do
     n <- nextAND
     doAndN n a b
 
-newAndN :: (MonadState Logic m) => Name -> m AndGate
+newAndN :: (MonadState Logic m) => Name -> m AND
 newAndN n = do
     (gateSets . andGates) $ (modify $ S.insert g)
     return g
     where
-        g = AndGate n
+        g = AND n
 
-doAndN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m AndGate
+doAndN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m AND
 doAndN = doOp2N newAndN
