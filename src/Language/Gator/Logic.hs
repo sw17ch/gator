@@ -1,8 +1,11 @@
 {-# LANGUAGE TemplateHaskell, FlexibleContexts #-} 
 module Language.Gator.Logic (
+    GateSet,
+    {-
     GateSets,
     orGates, xorGates, andGates,
     traces, inputs, outputs,
+    -}
 
     GateIDs,
     orID, xorID, andID,
@@ -18,7 +21,6 @@ module Language.Gator.Logic (
 
 import Data.Lenses.Template
 
-import Language.Gator.General
 import Language.Gator.Gates
 import Language.Gator.IO
 
@@ -28,11 +30,9 @@ import Data.Graph.Inductive.Tree
 import Data.Map (Map)
 import qualified Data.Map as M
 
-import Data.Set (Set)
-import qualified Data.Set as S
-
 type Joints = Map OutName [InName]
 
+{-
 data GateSets = GateSets {
     orGates_  :: Set OR,
     xorGates_ :: Set XOR,
@@ -47,6 +47,12 @@ $( deriveLenses ''GateSets )
 initGS :: GateSets
 initGS = GateSets S.empty S.empty S.empty
                   S.empty S.empty S.empty
+-}
+
+type GateSet = [Gate]
+
+initGS :: GateSet
+initGS = []
 
 data GateIDs = GateIDs {
     orID_     :: Integer,
@@ -63,7 +69,7 @@ initGI :: GateIDs
 initGI = GateIDs 0 0 0 0 0 0
 
 data Logic = Logic {
-    gateSets_ :: GateSets,
+    gateSets_ :: GateSet,
     joints_   :: Joints,
     gateIDs_  :: GateIDs
 } deriving (Show)
@@ -94,14 +100,7 @@ mkGr (Logic gs js _) =
         ns :: [(Name,Node)]
         ns = zip names [1..]
 
-        names = concat [
-                map name $ S.toList $ orGates_  gs,
-                map name $ S.toList $ xorGates_ gs,
-                map name $ S.toList $ andGates_ gs,
-                map name $ S.toList $ traces_   gs,
-                map name $ S.toList $ inputs_   gs,
-                map name $ S.toList $ outputs_  gs
-            ]
+        names = map gateName gs
 
         swap (a,b) = (b,a)
 

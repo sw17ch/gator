@@ -9,7 +9,6 @@ import Data.Lenses
 
 import qualified Data.Map as M
 
-import Language.Gator.General
 import Language.Gator.Logic
 import Language.Gator.IO
 

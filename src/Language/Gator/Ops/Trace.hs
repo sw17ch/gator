@@ -8,14 +8,13 @@ module Language.Gator.Ops.Trace (
 
 import Control.Monad.State
 import Language.Gator.Logic
-import Language.Gator.General
 import Language.Gator.IO
+import Language.Gator.Gates
 import Language.Gator.Gates.Trace
 
 import Language.Gator.Ops.General
 
 import qualified Data.Map as M
-import qualified Data.Set as S
 
 nextTrace :: (MonadState Logic m) => m Name
 nextTrace = do
@@ -32,10 +31,11 @@ traceTo a b = do
 
 newTraceN :: (MonadState Logic m) => Name -> m Trace
 newTraceN n = do
-    (gateSets . traces) $ (modify $ S.insert g)
+    gateSets $ modify (g':)
     return g 
     where
         g = Trace n
+        g' = G_Trace g
 
 traceToN :: (Out a, In0 b, MonadState Logic m) => Name -> a -> b -> m Trace
 traceToN n a b = do

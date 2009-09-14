@@ -8,13 +8,10 @@ module Language.Gator.Ops.AND (
 
 import Control.Monad.State
 import Language.Gator.Logic
-import Language.Gator.General
 import Language.Gator.IO
+import Language.Gator.Gates
 import Language.Gator.Gates.AND
-
 import Language.Gator.Ops.General
-
-import qualified Data.Set as S
 
 nextAND :: (MonadState Logic m) => m Name
 nextAND = do
@@ -31,10 +28,11 @@ doAnd a b = do
 
 newAndN :: (MonadState Logic m) => Name -> m AND
 newAndN n = do
-    (gateSets . andGates) $ (modify $ S.insert g)
+    gateSets $ (modify $ (g':))
     return g
     where
         g = AND n
+        g' = G_AND g
 
 doAndN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m AND
 doAndN = doOp2N newAndN

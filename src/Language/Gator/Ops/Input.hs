@@ -6,12 +6,11 @@ module Language.Gator.Ops.Input (
 
 import Language.Gator.Logic
 import Language.Gator.General
+import Language.Gator.Gates
 import Language.Gator.Gates.Input
 import Language.Gator.Ops.General
 
 import Control.Monad.State
-import qualified Data.Set as S
-
 
 nextInput :: (MonadState Logic m) => m Name
 nextInput = do
@@ -23,8 +22,9 @@ newInput = nextInput >>= newInputN
 
 newInputN :: (MonadState Logic m) => Name -> m Input
 newInputN n = do
-    (gateSets . inputs) $ (modify $ S.insert g)
+    gateSets $ modify (g':)
     return g
     where
         g = Input n
+        g' = G_Input g
 

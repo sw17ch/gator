@@ -8,13 +8,11 @@ module Language.Gator.Ops.OR (
 
 import Control.Monad.State
 import Language.Gator.Logic
-import Language.Gator.General
 import Language.Gator.IO
+import Language.Gator.Gates
 import Language.Gator.Gates.OR
 
 import Language.Gator.Ops.General
-
-import qualified Data.Set as S
 
 nextOR :: (MonadState Logic m) => m Name
 nextOR = do
@@ -31,10 +29,11 @@ doOr a b = do
 
 newOrN :: (MonadState Logic m) => Name -> m OR
 newOrN n = do
-    (gateSets . orGates) $ (modify $ S.insert g)
+    gateSets $ modify (g':)
     return g
     where
         g = OR n
+        g' = G_OR g
 
 doOrN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m OR
 doOrN = doOp2N newOrN

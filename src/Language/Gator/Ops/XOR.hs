@@ -8,13 +8,11 @@ module Language.Gator.Ops.XOR (
 
 import Control.Monad.State
 import Language.Gator.Logic
-import Language.Gator.General
 import Language.Gator.IO
+import Language.Gator.Gates
 import Language.Gator.Gates.XOR
 
 import Language.Gator.Ops.General
-
-import qualified Data.Set as S
 
 nextXOR :: (MonadState Logic m) => m Name
 nextXOR = do
@@ -31,10 +29,11 @@ doXOr a b = do
 
 newXOrN :: (MonadState Logic m) => Name -> m XOR
 newXOrN n = do
-    (gateSets . xorGates) $ (modify $ S.insert g)
+    gateSets $ modify (g':)
     return g
     where
         g = XOR n
+        g' = G_XOR g
 
 doXOrN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m XOR
 doXOrN = doOp2N newXOrN
