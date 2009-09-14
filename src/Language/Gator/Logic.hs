@@ -1,6 +1,7 @@
 {-# LANGUAGE TemplateHaskell, FlexibleContexts #-} 
 module Language.Gator.Logic (
     GateSet,
+    inputs, outputs,
 
     GateIDs,
     orID, xorID, andID,
@@ -30,6 +31,12 @@ type GateSet = [Gate]
 
 initGS :: GateSet
 initGS = []
+
+inputs :: GateSet -> [Input]
+inputs gs = [i | G_Input i <- gs]
+
+outputs :: GateSet -> [Output]
+outputs gs = [o | G_Output o <- gs]
 
 data GateIDs = GateIDs {
     orID_     :: Integer,
