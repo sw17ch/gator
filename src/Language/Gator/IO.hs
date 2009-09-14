@@ -7,6 +7,7 @@ module Language.Gator.IO (
     InName(..),
     outNameToName,
     inNameToName,
+    Name,
 ) where
 
 import Language.Gator.General
