@@ -42,4 +42,4 @@ library
                      Language.Gator.Examples.Err,
                      Language.Gator.Examples.IO
     hs-source-dirs: src/
-    ghc-options: -Wall
+    ghc-options: -Wall -Werror
