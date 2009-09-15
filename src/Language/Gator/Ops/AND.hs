@@ -28,11 +28,13 @@ doAnd a b = do
 
 newAndN :: (MonadState Logic m) => Name -> m AND
 newAndN n = do
+    i <- nextGateID
+
+    let g = AND n i
+        g' = G_AND g
+
     gateSets $ (modify $ (g':))
     return g
-    where
-        g = AND n
-        g' = G_AND g
 
 doAndN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m AND
 doAndN = doOp2N newAndN
