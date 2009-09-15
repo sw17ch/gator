@@ -14,7 +14,7 @@ module Language.Gator.IO (
 
 import Language.Gator.General
 
-type GateID = Integer
+type GateID = Int
 
 class Named a where
     name :: a -> Name

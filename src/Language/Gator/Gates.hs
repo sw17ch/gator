@@ -8,6 +8,7 @@ module Language.Gator.Gates (
 
     Gate(..),
     gateName,
+    gateGID,
 ) where
 
 import Language.Gator.Gates.OR
@@ -34,3 +35,11 @@ gateName (G_AND g) = name g
 gateName (G_Trace g) = name g
 gateName (G_Input g) = name g
 gateName (G_Output g) = name g
+
+gateGID :: Gate -> GateID
+gateGID (G_OR g) = gid g
+gateGID (G_XOR g) = gid g
+gateGID (G_AND g) = gid g
+gateGID (G_Trace g) = gid g
+gateGID (G_Input g) = gid g
+gateGID (G_Output g) = gid g

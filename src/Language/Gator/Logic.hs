@@ -83,10 +83,8 @@ mkGr (Logic _ gs js _) =
                               n = (unOut s1) ++ " -> " ++ (unIn s2)
                           in (n1,n2,n)
 
-        ns :: [(Name,Node)]
-        ns = zip names [1..]
-
-        names = map gateName gs
+        ns = let f g = (gateName g, gateGID g)
+             in  map f gs
 
         swap (a,b) = (b,a)
 
