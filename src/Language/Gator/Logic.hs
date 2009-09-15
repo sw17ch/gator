@@ -90,4 +90,3 @@ mkGr (Logic _ gs js _) =
 
         swap (a,b) = (b,a)
 
-

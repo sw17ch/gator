@@ -1,5 +1,6 @@
 module Language.Gator.IO (
     Named(..),
+    GIdent(..),
     Out(..),
     In0(..),
     In1(..),
@@ -17,6 +18,9 @@ type GateID = Integer
 
 class Named a where
     name :: a -> Name
+
+class GIdent a where
+    gid :: a -> GateID
 
 class (Named a) => Out a where
     out :: a -> OutName
