@@ -31,11 +31,13 @@ traceTo a b = do
 
 newTraceN :: (MonadState Logic m) => Name -> m Trace
 newTraceN n = do
+    i <- nextGateID
+
+    let g  = Trace n i
+        g' = G_Trace g
+
     gateSets $ modify (g':)
     return g 
-    where
-        g = Trace n
-        g' = G_Trace g
 
 traceToN :: (Out a, In0 b, MonadState Logic m) => Name -> a -> b -> m Trace
 traceToN n a b = do
