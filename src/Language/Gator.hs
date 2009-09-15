@@ -28,14 +28,16 @@ import Control.Monad.State
 
 mkDot :: Logic -> String
 mkDot l = let g = mkGr l
-              dot = graphToDot True g [] nods edgs
+              dot = graphToDot True g [gas] nods edgs
               stmts = graphStatements dot
               sgs = subGraphs stmts
               sgs' = osg : isg : sgs
               stmts' = stmts { subGraphs = sgs' }
               dot' = dot { graphStatements = stmts' }
           in printDotGraph dot'
-    where edgs (_,_,_) = [] -- [Label $ StrLabel $ n]
+    where gas = GraphAttrs [Concentrate True,
+                            RankDir FromLeft]
+          edgs (_,_,_) = []
           nods (_,n) = [Label $ StrLabel $ n]
 
           inputNodes = let mkN i = DotNode i []
