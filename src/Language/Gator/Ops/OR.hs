@@ -29,11 +29,13 @@ doOr a b = do
 
 newOrN :: (MonadState Logic m) => Name -> m OR
 newOrN n = do
+    i <- nextGateID
+
+    let g  = OR n i
+        g' = G_OR g
+
     gateSets $ modify (g':)
     return g
-    where
-        g = OR n
-        g' = G_OR g
 
 doOrN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m OR
 doOrN = doOp2N newOrN
