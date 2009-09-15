@@ -10,13 +10,14 @@ module Language.Gator (
     mkDot,
 ) where
 
+import Data.Lenses
 import Data.GraphViz
 import Data.GraphViz.Types
 
 -- All below here is exported
 import Language.Gator.General
 import Language.Gator.IO (
-        Named(..), Out(..),
+        Named(..), GIdent(..), Out(..),
         In0(..), In1(..),
         OutName, InName
     )
@@ -30,25 +31,37 @@ mkDot l = let g = mkGr l
               dot = graphToDot True g [] nods edgs
               stmts = graphStatements dot
               sgs = subGraphs stmts
-              sgs' = sg : sgs
+              sgs' = osg : isg : sgs
               stmts' = stmts { subGraphs = sgs' }
               dot' = dot { graphStatements = stmts' }
           in printDotGraph dot'
     where edgs (_,_,_) = [] -- [Label $ StrLabel $ n]
           nods (_,n) = [Label $ StrLabel $ n]
 
-          sg = DotSG {
+          inputNodes = let mkN i = DotNode i []
+                       in map mkN $ map gid $ inputs $ (l `fetch` gateSets)
+
+          outputNodes = let mkN i = DotNode i []
+                        in map mkN $ map gid $ outputs $ (l `fetch` gateSets)
+
+          isg = DotSG {
             isCluster = False,
             subGraphID = Just $ Str "inputs",
             subGraphStmts = DotStmts {
                 attrStmts = [GraphAttrs [Rank $ SameRank]],
                 subGraphs = [],
-                nodeStmts = [
-                                DotNode {
-                                    nodeID = 9999,
-                                    nodeAttributes = [Label $ StrLabel "TESTNODE"]
-                                }
-                            ],
+                nodeStmts = inputNodes,
+                edgeStmts = []
+            }
+          }
+
+          osg = DotSG {
+            isCluster = False,
+            subGraphID = Just $ Str "outputs",
+            subGraphStmts = DotStmts {
+                attrStmts = [GraphAttrs [Rank $ SameRank]],
+                subGraphs = [],
+                nodeStmts = outputNodes,
                 edgeStmts = []
             }
           }
