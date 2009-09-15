@@ -35,8 +35,7 @@ mkDot l = let g = mkGr l
               stmts' = stmts { subGraphs = sgs' }
               dot' = dot { graphStatements = stmts' }
           in printDotGraph dot'
-    where gas = GraphAttrs [Concentrate True,
-                            RankDir FromLeft]
+    where gas = GraphAttrs [ {- Concentrate True, -} RankDir FromLeft ]
           edgs (_,_,_) = []
           nods (_,n) = [Label $ StrLabel $ n]
 
