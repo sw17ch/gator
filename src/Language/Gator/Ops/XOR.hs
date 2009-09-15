@@ -29,11 +29,13 @@ doXOr a b = do
 
 newXOrN :: (MonadState Logic m) => Name -> m XOR
 newXOrN n = do
+    i <- nextGateID
+
+    let g  = XOR n i
+        g' = G_XOR g
+
     gateSets $ modify (g':)
     return g
-    where
-        g = XOR n
-        g' = G_XOR g
 
 doXOrN :: (Out a, Out b, MonadState Logic m) => Name -> a -> b -> m XOR
 doXOrN = doOp2N newXOrN

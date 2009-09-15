@@ -4,11 +4,14 @@ module Language.Gator.Gates.XOR (
 
 import Language.Gator.IO
 
-data XOR = XOR Name
+data XOR = XOR Name GateID
     deriving (Show,Ord,Eq)
 
+instance GIdent XOR where
+    gid (XOR _ g) = g
+
 instance Named XOR where
-    name (XOR n) = n
+    name (XOR n _) = n
 
 instance Out XOR 
 instance In0 XOR 
