@@ -31,38 +31,27 @@ mkDot l = let g = mkGr l
               dot = graphToDot True g [gas] nods edgs
               stmts = graphStatements dot
               sgs = subGraphs stmts
-              sgs' = osg : isg : sgs
+              sgs' = (mkDotSG "outputs" outputNodes) :
+                     (mkDotSG "inputs" inputNodes) :
+                     sgs
               stmts' = stmts { subGraphs = sgs' }
               dot' = dot { graphStatements = stmts' }
           in printDotGraph dot'
-    where gas = GraphAttrs [ {- Concentrate True, -} RankDir FromLeft ]
+    where gas = GraphAttrs [ RankDir FromLeft ]
           edgs (_,_,_) = []
           nods (_,n) = [Label $ StrLabel $ n]
 
-          inputNodes = let mkN i = DotNode i []
-                       in map mkN $ map gid $ inputs $ (l `fetch` gateSets)
+          (inputNodes,outputNodes) = let mkN i = DotNode i []
+                                         g f = (map mkN) . (map gid) . f $ (l `fetch` gateSets)
+                                     in (g inputs, g outputs)
 
-          outputNodes = let mkN i = DotNode i []
-                        in map mkN $ map gid $ outputs $ (l `fetch` gateSets)
-
-          isg = DotSG {
+          mkDotSG sgName nodes = DotSG {
             isCluster = False,
-            subGraphID = Just $ Str "inputs",
+            subGraphID = Just $ Str sgName,
             subGraphStmts = DotStmts {
                 attrStmts = [GraphAttrs [Rank $ SameRank]],
                 subGraphs = [],
-                nodeStmts = inputNodes,
-                edgeStmts = []
-            }
-          }
-
-          osg = DotSG {
-            isCluster = False,
-            subGraphID = Just $ Str "outputs",
-            subGraphStmts = DotStmts {
-                attrStmts = [GraphAttrs [Rank $ SameRank]],
-                subGraphs = [],
-                nodeStmts = outputNodes,
+                nodeStmts = nodes,
                 edgeStmts = []
             }
           }
