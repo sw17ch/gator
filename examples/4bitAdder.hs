@@ -4,12 +4,7 @@ module Main where
 import Language.Gator
 
 main :: IO ()
-main = do
-    l <- compile logic
-    putStrLn "/* "
-    print l
-    putStrLn " */"
-    putStrLn $ mkDot l
+main = compile logic >>= (putStrLn . mkDot)
 
 logic :: StateT Logic IO ()
 logic = do
