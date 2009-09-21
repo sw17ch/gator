@@ -2,7 +2,7 @@
 module Language.Gator.Ops.XOR (
     doXOr,
     doXOrN,
-    (<~~>),
+    (<^^>),
 ) where
 
 import Control.Monad.State
@@ -18,8 +18,8 @@ nextXOR = do
     idx <- nextIdxOf xorID
     return $ "xor" ++ (show idx)
 
-(<~~>) :: (Out a, Out b, MonadState Logic m) => a -> b -> m XOR
-a <~~> b = doXOr a b
+(<^^>) :: (Out a, Out b, MonadState Logic m) => a -> b -> m XOR
+a <^^> b = doXOr a b
 
 doXOr :: (Out a, Out b, MonadState Logic m) => a -> b -> m XOR
 doXOr a b = do
