@@ -1,9 +1,8 @@
 {-# LANGUAGE FlexibleContexts #-}
 module Language.Gator.Ops.AND (
-    newAnd,
-    newAndN,
     doAnd,
     doAndN,
+    (<&&>),
 ) where
 
 import Control.Monad.State
@@ -18,8 +17,8 @@ nextAND = do
     idx <- nextIdxOf andID
     return $ "and" ++ (show idx)
 
-newAnd :: (MonadState Logic m) => m AND
-newAnd = nextAND >>= newAndN
+(<&&>) :: (Out a, Out b, MonadState Logic m) => a -> b -> m AND
+a <&&> b = doAnd a b
 
 doAnd :: (Out a, Out b, MonadState Logic m) => a -> b -> m AND
 doAnd a b = do

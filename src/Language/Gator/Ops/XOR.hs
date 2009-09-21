@@ -1,9 +1,8 @@
 {-# LANGUAGE FlexibleContexts #-}
 module Language.Gator.Ops.XOR (
-    newXOr,
-    newXOrN,
     doXOr,
     doXOrN,
+    (<~~>),
 ) where
 
 import Control.Monad.State
@@ -19,8 +18,8 @@ nextXOR = do
     idx <- nextIdxOf xorID
     return $ "xor" ++ (show idx)
 
-newXOr :: (MonadState Logic m) => m XOR
-newXOr = nextXOR >>= newXOrN
+(<~~>) :: (Out a, Out b, MonadState Logic m) => a -> b -> m XOR
+a <~~> b = doXOr a b
 
 doXOr :: (Out a, Out b, MonadState Logic m) => a -> b -> m XOR
 doXOr a b = do

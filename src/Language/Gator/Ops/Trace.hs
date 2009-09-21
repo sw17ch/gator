@@ -1,9 +1,8 @@
 {-# LANGUAGE FlexibleContexts #-}
 module Language.Gator.Ops.Trace (
-    newTrace,
-    newTraceN,
     traceTo,
     traceToN,
+    (~~~),
 ) where
 
 import Control.Monad.State
@@ -21,8 +20,8 @@ nextTrace = do
     idx <- nextIdxOf traceID
     return $ "trace" ++ (show idx)
 
-newTrace :: (MonadState Logic m) => m Trace
-newTrace = nextTrace >>= newTraceN
+(~~~) :: (Out a, In0 b, MonadState Logic m) => a -> b -> m Trace
+a ~~~ b = traceTo a b
 
 traceTo :: (Out a, In0 b, MonadState Logic m) => a -> b -> m Trace
 traceTo a b = do

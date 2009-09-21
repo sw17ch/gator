@@ -1,9 +1,8 @@
 {-# LANGUAGE FlexibleContexts #-}
 module Language.Gator.Ops.OR (
-    newOr,
-    newOrN,
     doOr,
     doOrN,
+    (<||>),
 ) where
 
 import Control.Monad.State
@@ -19,8 +18,8 @@ nextOR = do
     idx <- nextIdxOf orID
     return $ "or" ++ (show idx)
 
-newOr :: (MonadState Logic m) => m OR
-newOr = nextOR >>= newOrN 
+(<||>) :: (Out a, Out b, MonadState Logic m) => a -> b -> m OR
+a <||> b = doOr a b
 
 doOr :: (Out a, Out b, MonadState Logic m) => a -> b -> m OR
 doOr a b = do
