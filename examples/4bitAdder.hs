@@ -44,12 +44,12 @@ logic = do
  -}
 fullAdder :: (Out a, Out b, Out c, MonadState Logic m) => a -> b -> c -> m (XOR, OR)
 fullAdder inA inB inC = do
-    xor0 <- inA `doXOr` inB
-    xor1 <- xor0 `doXOr` inC
+    xor0 <- inA <^^> inB
+    xor1 <- xor0 <^^> inC
 
-    and0 <- xor0 `doAnd` inC
-    and1 <- inA `doAnd` inB
+    and0 <- xor0 <&&> inC
+    and1 <- inA <&&> inB
 
-    or0  <- and0 `doOr` and1
+    or0  <- and0 <||> and1
         
     return (xor1,or0)
